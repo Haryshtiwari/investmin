@@ -17,6 +17,7 @@ import Image from 'next/image'
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import FundsBottomBar from '@/components/funds-bottom-bar'
+import "../dashboard-styles.css"
 import {
   Dialog,
   DialogTrigger,
@@ -582,8 +583,17 @@ export default function FundsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <div className="flex flex-1 overflow-hidden">
+      <div className="trading-dashboard min-h-screen flex flex-col relative">
+        {/* Enhanced pattern overlay for more visible texture */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none z-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                              radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%)`,
+            backgroundSize: '100px 100px'
+          }}
+        ></div>
+        <div className="flex flex-1 overflow-hidden relative z-10">
           <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
           <main className={`flex-1 flex items-center justify-center transition-all duration-300 ${
             sidebarCollapsed ? "sm:pl-20 pl-4 pr-6" : "sm:pl-68 pl-4 pr-6"
@@ -600,8 +610,17 @@ export default function FundsPage() {
 
   if (!activeAccount) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <div className="flex flex-1 overflow-hidden">
+      <div className="trading-dashboard min-h-screen flex flex-col relative">
+        {/* Enhanced pattern overlay for more visible texture */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none z-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                              radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%)`,
+            backgroundSize: '100px 100px'
+          }}
+        ></div>
+        <div className="flex flex-1 overflow-hidden relative z-10">
           <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
           <main className={`flex-1 flex items-center justify-center transition-all duration-300 ${
             sidebarCollapsed ? "sm:pl-20 pl-4 pr-6" : "sm:pl-68 pl-4 pr-6"
@@ -623,8 +642,17 @@ export default function FundsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="flex flex-1 overflow-hidden">
+    <div className="trading-dashboard min-h-screen flex flex-col relative">
+      {/* Enhanced pattern overlay for more visible texture */}
+      <div 
+        className="absolute inset-0 opacity-20 pointer-events-none z-0"
+        style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%)`,
+          backgroundSize: '100px 100px'
+        }}
+      ></div>
+      <div className="flex flex-1 overflow-hidden relative z-10">
         <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
         
         <main className={`flex-1 flex flex-col gap-6 overflow-auto transition-all duration-300 w-full max-w-screen-xl mx-auto ${
@@ -647,7 +675,7 @@ export default function FundsPage() {
 
           {/* Trading Status Info */}
           {accountStats && (accountStats.openPositions > 0 || accountStats.unrealizedPnL !== 0) && (
-            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
+            <Card className="trading-card-override">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-blue-600" />
@@ -687,7 +715,7 @@ export default function FundsPage() {
           {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {pendingDeposits && pendingDeposits.length > 0 && (
-              <Card className="col-span-1 sm:col-span-2 bg-muted/5">
+              <Card className="col-span-1 sm:col-span-2 trading-card-override">
                 <CardHeader>
                   <CardTitle className="text-base">Pending Deposit Requests</CardTitle>
                 </CardHeader>
@@ -954,8 +982,8 @@ export default function FundsPage() {
             </div>
 
           {/* Recent Transactions */}
-          <Card className="bg-card/50 border border-border/50">
-            <CardHeader className="border-b border-border/50">
+          <Card className="trading-card-override">
+            <CardHeader className="border-b border-gray-600/40 bg-gradient-to-r from-gray-800/30 to-black/20">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg font-semibold">Recent Transactions</CardTitle>
                 <Badge variant="secondary" className="text-xs">

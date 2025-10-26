@@ -210,12 +210,6 @@ export default function WishlistPanel({ isOpen, onClose, inline = false }: Props
                               {change >= 0 ? '+' : ''}{change.toFixed(4)}
                             </span>
                           </div>
-                          <div className="flex items-center justify-between mt-0.5">
-                            <span className="text-xs text-gray-400">Quick actions</span>
-                            <span className={`text-xs font-mono ${changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                              {changePercent >= 0 ? '+' : ''}{changePercent.toFixed(2)}%
-                            </span>
-                          </div>
                         </div>
                       </div>
                       
@@ -227,10 +221,10 @@ export default function WishlistPanel({ isOpen, onClose, inline = false }: Props
                         </div>
                         <div className="flex items-center gap-1">
                           <TradeDialog symbol={s} symbolId={symbolId ?? 0} price={String(ask ?? price)} type="buy">
-                            <Button size="sm" className="bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white border border-emerald-500 text-xs px-2 py-1 h-5 shadow-md">B</Button>
+                            <Button size="sm" className="bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white border border-emerald-500 text-sm px-3 py-1.5 h-7 shadow-md">B</Button>
                           </TradeDialog>
                           <TradeDialog symbol={s} symbolId={symbolId ?? 0} price={String(bid ?? price)} type="sell">
-                            <Button size="sm" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white border border-red-500 text-xs px-2 py-1 h-5 shadow-md">S</Button>
+                            <Button size="sm" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white border border-red-500 text-sm px-3 py-1.5 h-7 shadow-md">S</Button>
                           </TradeDialog>
                           <Button variant="ghost" size="sm" className="hover:bg-gray-700/50 text-gray-500 hover:text-red-400 p-0.5 h-5 w-5" aria-label={`Remove ${s}`} onClick={() => removeSymbolFromWatchlist(s)}>
                             <X className="w-2.5 h-2.5" />
@@ -306,7 +300,6 @@ export default function WishlistPanel({ isOpen, onClose, inline = false }: Props
                   <div key={s} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/30">
                     <div>
                       <div className="font-semibold">{s}</div>
-                      <div className="text-xs text-muted-foreground">Quick actions</div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right text-xs">
@@ -314,8 +307,8 @@ export default function WishlistPanel({ isOpen, onClose, inline = false }: Props
                         <div className="text-rose-500">Ask: <span className="font-mono">{fmt(ask)}</span></div>
                       </div>
 
-                      <Button size="sm" className="px-2 py-0.5 text-xs bg-emerald-600 hover:bg-emerald-700 text-white" onClick={() => quickOrder(s, 'buy')} disabled={!!loading[s]}>Buy</Button>
-                      <Button size="sm" variant="destructive" className="px-2 py-0.5 text-xs" onClick={() => quickOrder(s, 'sell')} disabled={!!loading[s]}>Sell</Button>
+                      <Button size="sm" className="px-3 py-1 text-sm bg-emerald-600 hover:bg-emerald-700 text-white" onClick={() => quickOrder(s, 'buy')} disabled={!!loading[s]}>Buy</Button>
+                      <Button size="sm" variant="destructive" className="px-3 py-1 text-sm" onClick={() => quickOrder(s, 'sell')} disabled={!!loading[s]}>Sell</Button>
                       <Button variant="ghost" size="sm" className="p-1 ml-2" aria-label={`Remove ${s}`} onClick={() => removeSymbolFromWatchlist(s)}>
                         <X className="w-4 h-4" />
                       </Button>

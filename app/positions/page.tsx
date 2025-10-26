@@ -7,6 +7,7 @@ import { usePositions, useClosePosition } from '@/hooks/use-trading'
 import { useToast } from "@/hooks/use-toast"
 import { TradingSidebar } from "@/components/trading-sidebar"
 import { ProtectedRoute } from "@/components/auth/protected-route"
+import "../dashboard-styles.css"
 // Trade dialog not used on this page
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -327,11 +328,20 @@ export default function PositionsPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="trading-dashboard min-h-screen flex flex-col relative">
+        {/* Enhanced pattern overlay for more visible texture */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none z-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                              radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%)`,
+            backgroundSize: '100px 100px'
+          }}
+        ></div>
         
         {/* Header */}
 
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 overflow-hidden relative z-10">
           {/* Sidebar */}
           <TradingSidebar
             collapsed={sidebarCollapsed}
@@ -373,7 +383,7 @@ export default function PositionsPage() {
             {/* Summary cards removed — position stats are available in the fixed bottom bar */}
 
             {/* Filters and Search */}
-            <Card>
+            <Card className="trading-card-override">
               <CardContent className="pt-6">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-1">
@@ -412,14 +422,14 @@ export default function PositionsPage() {
             </Card>
 
             {/* Positions Table */}
-            <Card className="flex-1">
+            <Card className="flex-1 positions-container">
               <CardContent className="p-0">
                 <Tabs defaultValue="open" className="h-full">
-                  <div className="flex items-center justify-between px-6 py-4 border-b">
-                    <TabsList className="grid w-full max-w-[500px] grid-cols-3">
-                      <TabsTrigger value="open">Open ({openPositions.length})</TabsTrigger>
-                      <TabsTrigger value="pending">Pending ({pendingPositions.length})</TabsTrigger>
-                      <TabsTrigger value="history">Closed ({closedPositions.length})</TabsTrigger>
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-gray-600/40 bg-gradient-to-r from-gray-800/30 to-black/20">
+                    <TabsList className="grid w-full max-w-[500px] grid-cols-3 gap-1 h-8 bg-gray-800/60 border border-gray-600/40 rounded-lg">
+                      <TabsTrigger value="open" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">Open ({openPositions.length})</TabsTrigger>
+                      <TabsTrigger value="pending" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">Pending ({pendingPositions.length})</TabsTrigger>
+                      <TabsTrigger value="history" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">Closed ({closedPositions.length})</TabsTrigger>
                     </TabsList>
                   </div>
 

@@ -569,10 +569,10 @@ function PositionsTable() {
       <CardContent className="p-0 bg-gradient-to-br from-gray-700/20 to-black/40 h-full">
         <Tabs defaultValue="open" className="h-full flex flex-col">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-2 py-1 border-b border-gray-600/30 gap-1 flex-shrink-0 bg-gradient-to-r from-gray-800/30 to-black/20">
-              <TabsList className="grid w-full grid-cols-3 sm:max-w-[400px] gap-1 h-7 bg-gradient-to-r from-gray-700/50 to-gray-800/50 border border-gray-600/30">
-              <TabsTrigger value="open" className="text-xs px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-gray-600/80 data-[state=active]:to-black/80 data-[state=active]:text-white data-[state=active]:shadow-lg text-gray-300">Open ({openPositions.length})</TabsTrigger>
-              <TabsTrigger value="pending" className="text-xs px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-gray-600/80 data-[state=active]:to-black/80 data-[state=active]:text-white data-[state=active]:shadow-lg text-gray-300">Pending ({pendingPositions.length})</TabsTrigger>
-              <TabsTrigger value="history" className="text-xs px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-gray-600/80 data-[state=active]:to-black/80 data-[state=active]:text-white data-[state=active]:shadow-lg text-gray-300">History ({closedPositions.length})</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 sm:max-w-[400px] gap-1 h-8 bg-gray-800/60 border border-gray-600/40 rounded-lg">
+              <TabsTrigger value="open" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">Open ({openPositions.length})</TabsTrigger>
+              <TabsTrigger value="pending" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">Pending ({pendingPositions.length})</TabsTrigger>
+              <TabsTrigger value="history" className="text-xs px-3 py-1 data-[state=active]:bg-gray-600 data-[state=active]:text-white data-[state=active]:shadow-md text-gray-300 hover:text-white transition-colors rounded-md">History ({closedPositions.length})</TabsTrigger>
             </TabsList>
             
             <div className="flex items-center gap-2">

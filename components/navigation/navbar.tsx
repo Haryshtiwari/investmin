@@ -41,7 +41,10 @@ export function Navbar() {
 
   if (!isAuthenticated) {
     return (
-      <nav className="sticky top-0 z-50 border-b bg-background">
+      <nav className="sticky top-0 z-50 border-b" style={{
+        background: "linear-gradient(135deg, #111827 0%, #000000 50%, #374151 100%)",
+        borderColor: "rgba(107, 114, 128, 0.4)"
+      }}>
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
@@ -64,7 +67,10 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-500 border-b bg-background shadow-sm">
+    <nav className="sticky top-0 z-500 border-b shadow-sm" style={{
+      background: "linear-gradient(135deg, #111827 0%, #000000 50%, #374151 100%)",
+      borderColor: "rgba(107, 114, 128, 0.4)"
+    }}>
       <div className="px-5 w-full">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">

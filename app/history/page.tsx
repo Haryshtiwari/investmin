@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Clock, Loader2, RefreshCw } from "lucide-react"
 import { Position } from "@/lib/types"
 import { normalizePositions, formatPrice, formatPnL, getPnLColor } from "@/lib/utils-trading"
+import "../dashboard-styles.css"
 
 
 export default function HistoryPage() {
@@ -111,8 +112,17 @@ export default function HistoryPage() {
   }, [refetch])
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="flex flex-1 overflow-hidden">
+    <div className="trading-dashboard min-h-screen flex flex-col relative">
+      {/* Enhanced pattern overlay for more visible texture */}
+      <div 
+        className="absolute inset-0 opacity-20 pointer-events-none z-0"
+        style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%), 
+                            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%)`,
+          backgroundSize: '100px 100px'
+        }}
+      ></div>
+      <div className="flex flex-1 overflow-hidden relative z-10">
         <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
 
         <main className={`flex-1 flex flex-col gap-6 overflow-auto transition-all duration-300 w-full px-4 sm:px-6 lg:px-8 ${
@@ -142,7 +152,7 @@ export default function HistoryPage() {
           {/* Statistics removed - replaced by date-range filter below */}
 
           {/* Date filter (presets + custom range) */}
-          <Card>
+          <Card className="trading-card-override">
             <CardContent className="pt-6">
               <div className="flex flex-col sm:flex-row gap-4 items-center">
                 <div className="flex items-center gap-2">
@@ -187,7 +197,7 @@ export default function HistoryPage() {
           </Card>
 
           {/* Trading History Table */}
-          <Card className="flex-1">
+          <Card className="flex-1 positions-container">
             <CardContent className="p-0">
               {error && (
                 <div className="p-4 text-center text-destructive">
@@ -246,16 +256,16 @@ export default function HistoryPage() {
                   <div className="hidden sm:block overflow-auto">
                     <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead>Trade</TableHead>
-                        <TableHead>Time</TableHead>
-                        <TableHead>Symbol</TableHead>
-                        <TableHead>Type</TableHead>
-                        <TableHead>Lots</TableHead>
-                        <TableHead>Open Price</TableHead>
-                        <TableHead>Close Price</TableHead>
-                        <TableHead>Duration</TableHead>
-                        <TableHead>P&L</TableHead>
+                      <TableRow className="bg-gradient-to-r from-gray-800/40 to-black/30 border-b border-gray-600/40">
+                        <TableHead className="text-gray-200 font-semibold">Trade</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Time</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Symbol</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Type</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Lots</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Open Price</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Close Price</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">Duration</TableHead>
+                        <TableHead className="text-gray-200 font-semibold">P&L</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
