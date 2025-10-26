@@ -1,0 +1,33 @@
+/* Dashboard specific styles to override theme defaults */
+.trading-dashboard {
+  background: linear-gradient(135deg, #111827 0%, #000000 50%, #374151 100%) !important;
+  min-height: 100vh;
+}
+
+.trading-dashboard * {
+  /* Ensure child components don't override our background */
+  --tw-bg-opacity: 0.8;
+}
+
+.chart-container {
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%) !important;
+  border: 2px solid rgba(107, 114, 128, 0.4) !important;
+  box-shadow: 
+    inset 4px 4px 12px rgba(0, 0, 0, 0.5), 
+    inset -4px -4px 12px rgba(255, 255, 255, 0.08), 
+    0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.positions-container {
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%) !important;
+  border: 2px solid rgba(107, 114, 128, 0.4) !important;
+  box-shadow: 
+    inset 4px 4px 12px rgba(0, 0, 0, 0.5), 
+    inset -4px -4px 12px rgba(255, 255, 255, 0.08), 
+    0 12px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+.trading-card-override {
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%) !important;
+  border: 2px solid rgba(107, 114, 128, 0.3) !important;
+}
