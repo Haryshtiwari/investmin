@@ -50,7 +50,7 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="trading-dashboard min-h-screen flex flex-col">
         <div className="flex flex-1 overflow-hidden">
           <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
           <main className={`flex-1 overflow-auto transition-all duration-300 w-full p-8 ${sidebarCollapsed ? 'pl-20' : 'pl-68'}`}>
@@ -67,7 +67,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="trading-dashboard min-h-screen flex flex-col">
       <div className="flex flex-1 overflow-hidden">
         <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
 

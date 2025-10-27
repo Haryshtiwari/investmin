@@ -20,12 +20,25 @@ const normalizeUser = (user: User): User => {
       ? rawRolesSource.split(',')
       : [];
   const normalizedRoles = rawRoles
-    .map((role: string) => role.trim().toLowerCase())
+    .map((role: string) => {
+      const normalized = role.trim().toLowerCase();
+      // Map common admin role variants to 'admin'
+      if (['administrator', 'admin', 'super_admin', 'superadmin', 'root'].includes(normalized)) {
+        return 'admin';
+      }
+      return normalized;
+    })
     .filter((role) => role.length > 0);
-  const normalizedRole = (user.role ?? normalizedRoles[0] ?? 'user')
+  
+  let normalizedRole = (user.role ?? normalizedRoles[0] ?? 'user')
     ?.toString()
     .trim()
     .toLowerCase();
+  
+  // Map common admin role variants to 'admin'
+  if (['administrator', 'admin', 'super_admin', 'superadmin', 'root'].includes(normalizedRole)) {
+    normalizedRole = 'admin';
+  }
 
   const firstName = user.firstName ?? user.first_name;
   const lastName = user.lastName ?? user.last_name;
@@ -264,7 +277,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      dispatch({ type: 'AUTH_LOGOUT' });
+      // Add a small delay to allow components to clean up properly
+      setTimeout(() => {
+        dispatch({ type: 'AUTH_LOGOUT' });
+      }, 100);
     }
   };
 

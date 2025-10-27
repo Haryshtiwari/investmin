@@ -1,9 +1,10 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
 import { AdminTopBar } from "@/components/admin/admin-topbar"
 import { useSidebarCollapsed } from "@/hooks/use-sidebar-collapsed"
+import { useTheme } from "next-themes"
 
 // Temporary inline types until we fix the imports
 interface SidebarItem {
@@ -29,9 +30,22 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children, sidebarItems, topBarConfig }: AdminLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useSidebarCollapsed(false)
+  const { setTheme } = useTheme()
+
+  // Force dark theme for admin dashboard
+  useEffect(() => {
+    setTheme('dark')
+    // Also add dark class to body as backup
+    document.body.classList.add('dark')
+    document.documentElement.classList.add('dark')
+    
+    return () => {
+      // Don't remove dark class on cleanup as user might want to stay in dark mode
+    }
+  }, [setTheme])
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="trading-dashboard min-h-screen">
       {/* Fixed Sidebar */}
       <AdminSidebar
         collapsed={sidebarCollapsed}

@@ -3,6 +3,7 @@
 import React, { useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import {
   BarChart3,
   TrendingUp,
@@ -152,11 +153,17 @@ export function TradingSidebar({ className, collapsed = false, onCollapsedChange
         <div className="flex items-center space-x-2 relative z-10">
           {!collapsed && (
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gray-600 to-black flex items-center justify-center shadow-inner relative"
+              <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-inner relative overflow-hidden"
                    style={{
                      boxShadow: "inset 2px 2px 4px rgba(0,0,0,0.5), inset -2px -2px 4px rgba(255,255,255,0.1)"
                    }}>
-                <span className="text-white font-bold text-sm drop-shadow-lg">T</span>
+                <Image 
+                  src="/logo_mi.png" 
+                  alt="Logo" 
+                  width={24} 
+                  height={24} 
+                  className="object-contain"
+                />
               </div>
               <span className="font-semibold text-gray-200 drop-shadow-sm">TradePro</span>
             </div>

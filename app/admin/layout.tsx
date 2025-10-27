@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Poppins, Space_Grotesk, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Suspense } from "react"
 import "../../styles/admin.css"
 
@@ -43,16 +42,14 @@ export default function AdminRootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/placeholder-logo.svg" />
+        <link rel="icon" href="/logo_mi.png" />
         <meta name="robots" content="noindex,nofollow" />
       </head>
-            <body className={`${poppins.variable} ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-poppins antialiased admin-scrollbar`}>
+      <body className={`${poppins.variable} ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} font-poppins antialiased admin-scrollbar`}>
         <Suspense fallback={null}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            {children}
-          </ThemeProvider>
+          {children}
         </Suspense>
         <Analytics />
       </body>

@@ -14,14 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { LogOut, Settings, User, TrendingUp, Moon, Sun, CreditCard } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import { LogOut, Settings, User, TrendingUp, CreditCard } from 'lucide-react'
 
 export function Navbar() {
   const { user, logout, isAuthenticated } = useAuth()
   const { activeAccount, accountSummary, isLoading: tradingLoading, accounts } = useTrading()
   const router = useRouter()
-  const { theme, setTheme } = useTheme()
+  // Theme toggle removed
   const displayFirstName = user?.first_name ?? user?.firstName ?? ''
   const displayLastName = user?.last_name ?? user?.lastName ?? ''
   const displayName = [displayFirstName, displayLastName].filter(Boolean).join(' ').trim() || 'User'
@@ -103,18 +102,8 @@ export function Navbar() {
               </Button>
             </div>
 
-            {/* Theme toggle and profile - visible on all screen sizes */}
+            {/* Profile menu (theme toggle removed) */}
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="relative"
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                aria-label="Toggle theme"
-              >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">

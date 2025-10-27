@@ -1,13 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, FormEvent, useEffect, useCallback, useMemo } from "react"
 import { useSidebarCollapsed } from '@/hooks/use-sidebar-collapsed'
 import { useTrading } from '@/contexts/TradingContext'
 import { usePositions, useClosePosition } from '@/hooks/use-trading'
 import { useToast } from "@/hooks/use-toast"
 import { TradingSidebar } from "@/components/trading-sidebar"
 import { ProtectedRoute } from "@/components/auth/protected-route"
-import "../dashboard-styles.css"
 // Trade dialog not used on this page
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -72,44 +71,67 @@ export default function PositionsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [sideFilter, setSideFilter] = useState('all')
+  
+  // Mobile pagination for performance
+  const [mobilePageSize] = useState(10) // Show 10 items at a time on mobile
+  const [visibleOpenPositions, setVisibleOpenPositions] = useState(mobilePageSize)
+  const [visiblePendingPositions, setVisiblePendingPositions] = useState(mobilePageSize)
+  const [visibleClosedPositions, setVisibleClosedPositions] = useState(mobilePageSize)
 
-  // Process positions data
-  const rawPositions: Position[] = Array.isArray(positionsData)
-    ? (positionsData as Position[])
-    : (((positionsData as unknown) as { data?: Position[] } | null)?.data || [])
-  const positions = normalizePositions(rawPositions)
+  // Process positions data with memoization for performance
+  const positions = useMemo(() => {
+    const rawPositions: Position[] = Array.isArray(positionsData)
+      ? (positionsData as Position[])
+      : (((positionsData as unknown) as { data?: Position[] } | null)?.data || [])
+    return normalizePositions(rawPositions)
+  }, [positionsData])
   
-  // Filter positions
-  const filteredPositions = positions.filter((position: Position) => {
-    const matchesSearch = !searchTerm || 
-      position.symbol?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      position.id.toString().includes(searchTerm)
-    const matchesStatus = statusFilter === 'all' || position.status === statusFilter
-    const matchesSide = sideFilter === 'all' || position.side === sideFilter
-    
-    return matchesSearch && matchesStatus && matchesSide
-  })
+  // Filter positions with memoization
+  const filteredPositions = useMemo(() => {
+    return positions.filter((position: Position) => {
+      const matchesSearch = !searchTerm || 
+        position.symbol?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        position.id.toString().includes(searchTerm)
+      const matchesStatus = statusFilter === 'all' || position.status === statusFilter
+      const matchesSide = sideFilter === 'all' || position.side === sideFilter
+      
+      return matchesSearch && matchesStatus && matchesSide
+    })
+  }, [positions, searchTerm, statusFilter, sideFilter])
   
-  const openPositions = filteredPositions.filter((p: Position) => p.status === 'open')
-  const pendingPositions = filteredPositions.filter((p: Position) => p.status === 'pending')
-  const closedPositions = filteredPositions.filter((p: Position) => p.status === 'closed')
+  // Categorize positions with memoization
+  const { openPositions, pendingPositions, closedPositions } = useMemo(() => ({
+    openPositions: filteredPositions.filter((p: Position) => p.status === 'open'),
+    pendingPositions: filteredPositions.filter((p: Position) => p.status === 'pending'),
+    closedPositions: filteredPositions.filter((p: Position) => p.status === 'closed')
+  }), [filteredPositions])
+
+  // Mobile-optimized data with pagination
+  const mobileOpenPositions = useMemo(() => 
+    openPositions.slice(0, visibleOpenPositions), 
+    [openPositions, visibleOpenPositions]
+  )
+
+  const loadMorePositions = useCallback(() => {
+    setVisibleOpenPositions(prev => Math.min(prev + mobilePageSize, openPositions.length))
+  }, [mobilePageSize, openPositions.length])
 
   // Position calculations are handled in the PositionStatsBar component now.
 
-  // Handle real-time updates
-  useEffect(() => {
-    const handleWebSocketMessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data)
-        if (data.type === 'positions_update' || data.type === 'realtime_positions_update') {
-          refetch()
-          setLastUpdate(new Date().toLocaleTimeString())
-        }
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error)
+  // Handle real-time updates with useCallback to prevent re-renders
+  const handleWebSocketMessage = useCallback((event: MessageEvent) => {
+    try {
+      const data = JSON.parse(event.data)
+      if (data.type === 'positions_update' || data.type === 'realtime_positions_update') {
+        refetch()
+        setLastUpdate(new Date().toLocaleTimeString())
       }
+    } catch (error) {
+      console.error('Error parsing WebSocket message:', error)
     }
+  }, [refetch])
 
+  useEffect(() => {
     if (typeof window !== 'undefined' && window.WebSocket) {
       try {
         const ws = new WebSocket(process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:3002')
@@ -127,7 +149,7 @@ export default function PositionsPage() {
         console.error('WebSocket connection failed:', error)
       }
     }
-  }, [refetch])
+  }, [handleWebSocketMessage])
 
   // Handle position actions
   const handleClosePosition = async (positionId: number) => {
@@ -455,9 +477,9 @@ export default function PositionsPage() {
                       </div>
                     ) : (
                       <>
-                        {/* Mobile card list: visible on small screens */}
+                        {/* Mobile card list: visible on small screens - optimized for performance */}
                         <div className="sm:hidden p-2 space-y-3 max-h-[60vh] overflow-auto">
-                          {openPositions.map((position: Position) => {
+                          {mobileOpenPositions.map((position: Position) => {
                             const pnl = position.unrealizedPnl ?? position.profit ?? 0
                             const volume = position.volume ?? position.lotSize ?? 0
                             const currentPrice = position.currentPrice ?? position.openPrice
@@ -553,6 +575,19 @@ export default function PositionsPage() {
                               </Card>
                             )
                           })}
+                          
+                          {/* Load More button for mobile - only show if there are more positions */}
+                          {visibleOpenPositions < openPositions.length && (
+                            <div className="flex justify-center pt-4">
+                              <Button 
+                                variant="outline" 
+                                onClick={loadMorePositions}
+                                className="w-full max-w-xs"
+                              >
+                                Load More ({openPositions.length - visibleOpenPositions} remaining)
+                              </Button>
+                            </div>
+                          )}
                         </div>
 
                         {/* Desktop table: hidden on small screens */}
@@ -650,6 +685,19 @@ export default function PositionsPage() {
                               </Card>
                             )
                           })}
+                          
+                          {/* Load More button for mobile pending positions */}
+                          {visiblePendingPositions < pendingPositions.length && (
+                            <div className="flex justify-center pt-4">
+                              <Button 
+                                variant="outline" 
+                                onClick={loadMorePositions}
+                                className="w-full max-w-xs"
+                              >
+                                Load More ({pendingPositions.length - visiblePendingPositions} remaining)
+                              </Button>
+                            </div>
+                          )}
                         </div>
 
                         {/* Desktop table: hidden on small screens */}
@@ -783,6 +831,19 @@ export default function PositionsPage() {
                               </Card>
                             )
                           })}
+                          
+                          {/* Load More button for mobile closed positions */}
+                          {visibleClosedPositions < closedPositions.length && (
+                            <div className="flex justify-center pt-4">
+                              <Button 
+                                variant="outline" 
+                                onClick={loadMorePositions}
+                                className="w-full max-w-xs"
+                              >
+                                Load More ({closedPositions.length - visibleClosedPositions} remaining)
+                              </Button>
+                            </div>
+                          )}
                         </div>
 
                         {/* Desktop table: hidden on small screens */}

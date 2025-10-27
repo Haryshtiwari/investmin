@@ -17,7 +17,6 @@ import Image from 'next/image'
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import FundsBottomBar from '@/components/funds-bottom-bar'
-import "../dashboard-styles.css"
 import {
   Dialog,
   DialogTrigger,

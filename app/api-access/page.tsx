@@ -206,7 +206,7 @@ export default function ApiAccessPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="trading-dashboard min-h-screen flex flex-col relative">
       <div className="flex flex-1 overflow-hidden">
         <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
 

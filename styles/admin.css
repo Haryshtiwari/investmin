@@ -1,23 +1,39 @@
 /* Admin Dashboard Professional Styles */
 
-/* Clean card effects */
+/* Clean card effects with gradient compatibility */
 .admin-card {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border: 1px solid rgba(107, 114, 128, 0.4);
+  box-shadow: 
+    inset 2px 2px 8px rgba(0, 0, 0, 0.3), 
+    inset -2px -2px 8px rgba(255, 255, 255, 0.05), 
+    0 4px 12px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease-in-out;
 }
 
 .admin-card:hover {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+  box-shadow: 
+    inset 2px 2px 8px rgba(0, 0, 0, 0.4), 
+    inset -2px -2px 8px rgba(255, 255, 255, 0.06), 
+    0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .admin-card-elevated {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+  border: 1px solid rgba(107, 114, 128, 0.5);
+  box-shadow: 
+    inset 3px 3px 10px rgba(0, 0, 0, 0.4), 
+    inset -3px -3px 10px rgba(255, 255, 255, 0.06), 
+    0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .admin-card-elevated:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  background: linear-gradient(135deg, rgba(55, 65, 81, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%);
+  box-shadow: 
+    inset 3px 3px 12px rgba(0, 0, 0, 0.5), 
+    inset -3px -3px 12px rgba(255, 255, 255, 0.07), 
+    0 16px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* Professional typography with new fonts */
@@ -104,36 +120,36 @@
   }
 }
 
-/* Glass morphism effects */
+/* Glass morphism effects for dark gradient */
 .admin-glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(55, 65, 81, 0.2);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(107, 114, 128, 0.3);
 }
 
 .admin-glass-dark {
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(107, 114, 128, 0.2);
 }
 
-/* Custom scrollbar for admin */
+/* Custom scrollbar for admin dark theme */
 .admin-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
 
 .admin-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
 
 .admin-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, rgb(59, 130, 246), rgb(147, 51, 234));
+  background: linear-gradient(45deg, rgba(107, 114, 128, 0.6), rgba(55, 65, 81, 0.8));
   border-radius: 3px;
 }
 
 .admin-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, rgb(37, 99, 235), rgb(126, 34, 206));
+  background: linear-gradient(45deg, rgba(107, 114, 128, 0.8), rgba(55, 65, 81, 1));
 }
 
 /* Loading animations */

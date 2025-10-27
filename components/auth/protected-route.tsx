@@ -13,27 +13,37 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
   const { user, isAuthenticated, isLoading } = useAuth()
   const router = useRouter()
   const hasAdminAccess = useMemo(() => {
-    const primaryRole = user?.role?.toLowerCase()
-    if (primaryRole === 'admin') {
-      return true
+    const primaryRole = user?.role?.toLowerCase();
+    const adminRoleVariants = ['admin', 'administrator', 'super_admin', 'superadmin', 'root'];
+    
+    if (adminRoleVariants.includes(primaryRole)) {
+      return true;
     }
 
     if (Array.isArray(user?.roles)) {
-      return user.roles.some((role) => role?.toLowerCase() === 'admin')
+      return user.roles.some((role) => {
+        const normalizedRole = role?.toLowerCase();
+        return adminRoleVariants.includes(normalizedRole);
+      });
     }
 
-    return false
+    return false;
   }, [user])
 
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
-        router.push('/login')
+        // Use setTimeout to avoid conflicts with ongoing React operations
+        setTimeout(() => {
+          router.push('/login')
+        }, 0)
         return
       }
 
       if (requireAdmin && !hasAdminAccess) {
-        router.push('/')
+        setTimeout(() => {
+          router.push('/')
+        }, 0)
         return
       }
     }

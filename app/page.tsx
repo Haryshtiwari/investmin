@@ -5,7 +5,6 @@ import { TradingSidebar } from "@/components/trading-sidebar"
 import { ProtectedRoute } from "@/components/auth/protected-route"
 import { useState, lazy, Suspense } from "react"
 import { ChevronLeft, Loader2 } from "lucide-react"
-import "./dashboard-styles.css"
 
 // Lazy load heavy components for better performance
 const TradingChart = lazy(() => import("@/components/trading-chart"))

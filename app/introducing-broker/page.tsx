@@ -960,7 +960,7 @@ export default function IntroducingBrokerPageV2() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="trading-dashboard min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           <p className="text-sm text-muted-foreground">Loading Introducing Broker dashboard…</p>
@@ -1007,7 +1007,7 @@ export default function IntroducingBrokerPageV2() {
     const canApply = applicationStatus === 'not_applied' || applicationStatus === 'rejected';
 
     return (
-      <div className="flex min-h-screen bg-muted/20">
+      <div className="trading-dashboard min-h-screen flex">
         <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
         <Toaster />
         <div className={`flex flex-1 items-center justify-center transition-all duration-300 ${
@@ -1055,7 +1055,7 @@ export default function IntroducingBrokerPageV2() {
   }
 
   return (
-    <div className="flex min-h-screen bg-muted/20">
+    <div className="trading-dashboard min-h-screen flex">
       <TradingSidebar collapsed={sidebarCollapsed} onCollapsedChange={setSidebarCollapsed} />
       <Toaster />
       <div className={`flex-1 transition-all duration-300 ${

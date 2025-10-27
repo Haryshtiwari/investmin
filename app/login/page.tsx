@@ -11,6 +11,7 @@ import { Loader2, Eye, EyeOff, TrendingUp, Sun, Moon, Shield, Lock, User, Mail, 
 import { useAuth } from "@/contexts/AuthContext"
 import { useTheme } from "next-themes"
 import { toast } from "sonner"
+import Image from "next/image"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -69,6 +70,7 @@ export default function LoginPage() {
       
       console.log('Login useEffect - User:', user)
       console.log('Login useEffect - User role:', user.role)
+      console.log('Login useEffect - User roles array:', user.roles)
       console.log('Login useEffect - Is admin?', user.role?.toLowerCase() === 'admin')
       console.log('Login useEffect - Redirect URL:', redirectUrl)
       
@@ -121,6 +123,7 @@ export default function LoginPage() {
       console.log('Login handleSubmit - Full response:', response)
       console.log('Login handleSubmit - User:', response?.user)
       console.log('Login handleSubmit - User role:', userRole)
+      console.log('Login handleSubmit - User roles array:', response?.user?.roles)
       console.log('Login handleSubmit - Redirect URL:', redirectUrl)
       console.log('Login handleSubmit - Is admin?', userRole?.toLowerCase() === 'admin')
       
@@ -222,8 +225,15 @@ export default function LoginPage() {
         {/* Logo/Brand */}
         <div className="text-center">
           <div className="flex items-center justify-center mb-6">
-            <div className="bg-gradient-to-r from-gray-700 to-black p-4 rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-gray-600">
-              <TrendingUp className="w-10 h-10 text-white" />
+            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-gray-600/50 overflow-hidden">
+              <Image 
+                src="/logo_mi.png" 
+                alt="Logo" 
+                width={40} 
+                height={40} 
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
